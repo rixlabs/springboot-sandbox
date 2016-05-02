@@ -50,5 +50,5 @@ Handles and behaviour
 /greeting
 
 POST Some data to the H2 db
-curl -v -H "Accept: application/json" -H "Content-type: application/json" -X POST -d '{  "firstName" : "Frodo",  "lastName" : "Baggins" }'  http://localhost:8080/people
+    curl -v -H "Accept: application/json" -H "Content-type: application/json" -X POST -d '{  "firstName" : "Frodo",  "lastName" : "Baggins" }'  http://localhost:8080/people
 
