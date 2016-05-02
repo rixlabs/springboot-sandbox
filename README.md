@@ -39,4 +39,4 @@ This project include the **spring-boot-devtools** and is ready for the auto relo
 
 You need the fork in the plugin
 
-The autoreload is triggered when the files in the classpath change(needs a build CTRL+F9 in intellij)
+The autoreload is triggered when the files in the classpath change(needs a build -> CTRL+F9 in intellij)
