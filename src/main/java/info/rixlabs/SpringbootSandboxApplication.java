@@ -39,7 +39,7 @@ public class SpringbootSandboxApplication  {
 	}
 
 	@Bean
-	public CommandLineRunner demo(AccountRepository repository) {
+	public CommandLineRunner load(AccountRepository repository) {
 		return (args) -> {
 			// save an account
 			repository.save(new Account("poldo", "poldone"));

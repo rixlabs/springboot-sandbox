@@ -53,3 +53,20 @@ POST Some data to the H2 db
 ```
     curl -v -H "Accept: application/json" -H "Content-type: application/json" -X POST -d '{  "firstName" : "Frodo",  "lastName" : "Baggins" }'  http://localhost:8080/people
 ```
+
+### Security ###
+
+For test purpose there is some security implemented as basic http 
+
+you can access with
+
+**username**: poldo
+
+**password**: poldone
+
+You can change it in the SpringbootSandboxApplication class
+
+### Health check ###
+You can check the status of services at /health
+Actually is just the basic check of Actuator
+
