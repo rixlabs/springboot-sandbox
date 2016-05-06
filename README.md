@@ -81,6 +81,7 @@ a list of link that I used to better understand spring boot and some other littl
 - https://www.youtube.com/watch?v=CBwlgvfllNk
 - https://github.com/joshlong
 - https://spring.io/understanding/HATEOAS 
+- http://presos.dsyer.com/decks/microservice-security.html
 
 
 
