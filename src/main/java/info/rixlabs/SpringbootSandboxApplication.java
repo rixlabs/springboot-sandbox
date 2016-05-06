@@ -38,6 +38,7 @@ public class SpringbootSandboxApplication  {
 		SpringApplication.run(SpringbootSandboxApplication.class, args);
 	}
 
+	// Implement functional interface CommandLineRunner with a lambda
 	@Bean
 	public CommandLineRunner load(AccountRepository repository) {
 		return (args) -> {

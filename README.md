@@ -70,3 +70,20 @@ You can change it in the SpringbootSandboxApplication class
 You can check the status of services at /health
 Actually is just the basic check of Actuator
 
+
+## Usefull resources ##
+
+a list of link that I used to better understand spring boot and some other little things
+
+- http://www.programcreek.com/java-api-examples/index.php?api=org.springframework.boot.CommandLineRunner
+
+- https://github.com/spring-guides/tut-bookmarks/issues/10
+
+- https://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html#approach6
+
+- https://www.youtube.com/watch?v=CBwlgvfllNk
+
+- https://github.com/joshlong
+
+
+
