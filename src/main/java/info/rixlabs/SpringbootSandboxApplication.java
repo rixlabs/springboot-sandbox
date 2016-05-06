@@ -67,12 +67,12 @@ class WebSecurityConfiguration extends GlobalAuthenticationConfigurerAdapter {
 	@Autowired
 	AccountRepository accountRepository;
 
-	@Bean
-	UserDetailsService userDetailsService() {
-		return new UserDetailsService() {
 
-			@Override
-			public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+
+	//Turned into lambda following the sample ! :)
+	@Bean
+	public UserDetailsService userDetailsService() {
+		return (username) -> {
 				Account account = accountRepository.findByUsername(username);
 
 				if(account != null) {
@@ -82,8 +82,6 @@ class WebSecurityConfiguration extends GlobalAuthenticationConfigurerAdapter {
 					throw new UsernameNotFoundException("could not find the user '"
 							+ username + "'");
 				}
-			}
-
 		};
 	}
 }
