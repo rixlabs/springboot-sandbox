@@ -82,6 +82,7 @@ a list of link that I used to better understand spring boot and some other littl
 - https://github.com/joshlong
 - https://spring.io/understanding/HATEOAS 
 - http://presos.dsyer.com/decks/microservice-security.html
+- https://spring.io/blog/2014/11/07/webinar-replay-security-for-microservices-with-spring-and-oauth2
 
 
 
