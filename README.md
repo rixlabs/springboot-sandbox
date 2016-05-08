@@ -83,6 +83,9 @@ a list of link that I used to better understand spring boot and some other littl
 - https://spring.io/understanding/HATEOAS 
 - http://presos.dsyer.com/decks/microservice-security.html
 - https://spring.io/blog/2014/11/07/webinar-replay-security-for-microservices-with-spring-and-oauth2
+- http://blog.jdriven.com/2014/10/stateless-spring-security-part-2-stateless-authentication/
+- http://docs.spring.io/spring/docs/current/spring-framework-reference/htmlsingle/ also the freamwork need attention
+
 
 
 
