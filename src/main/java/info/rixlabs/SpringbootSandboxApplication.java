@@ -43,7 +43,7 @@ public class SpringbootSandboxApplication  {
 	public CommandLineRunner load(AccountRepository repository) {
 		return (args) -> {
 			// save an account
-			repository.save(new Account("poldo", "poldone"));
+			repository.save(new Account("poldo", "poldonex"));
 
 
 			log.info("---------------SECURITY TEST DATA----------------");
@@ -55,12 +55,20 @@ public class SpringbootSandboxApplication  {
 	}
 }
 
-@Configuration
-class WebSecurityConfiguration extends GlobalAuthenticationConfigurerAdapter {
 
+@EnableWebSecurity
+@Configuration
+class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
-	public void init(AuthenticationManagerBuilder auth) throws Exception {
+	protected void configure(HttpSecurity http) throws Exception {
+		http.authorizeRequests().anyRequest().fullyAuthenticated().and().
+				httpBasic().and().
+				csrf();
+	}
+
+	@Autowired
+	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(userDetailsService());
 	}
 
@@ -73,28 +81,16 @@ class WebSecurityConfiguration extends GlobalAuthenticationConfigurerAdapter {
 	@Bean
 	public UserDetailsService userDetailsService() {
 		return (username) -> {
-				Account account = accountRepository.findByUsername(username);
+			Account account = accountRepository.findByUsername(username);
 
-				if(account != null) {
-					return new User(account.getUsername(), account.getPassword(), true, true, true, true,
-							AuthorityUtils.createAuthorityList("USER"));
-				} else {
-					throw new UsernameNotFoundException("could not find the user '"
-							+ username + "'");
-				}
+			if(account != null) {
+				return new User(account.getUsername(), account.getPassword(), true, true, true, true,
+						AuthorityUtils.createAuthorityList("USER"));
+			} else {
+				throw new UsernameNotFoundException("could not find the user '"
+						+ username + "'");
+			}
 		};
-	}
-}
-
-@EnableWebSecurity
-@Configuration
-class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().anyRequest().fullyAuthenticated().and().
-				httpBasic().and().
-				csrf().disable();
 	}
 
 }
