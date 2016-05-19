@@ -21,6 +21,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.Arrays;
 import java.util.List;
@@ -43,7 +44,7 @@ public class SpringbootSandboxApplication  {
 	public CommandLineRunner load(AccountRepository repository) {
 		return (args) -> {
 			// save an account
-			repository.save(new Account("poldo", "poldonex"));
+			repository.save(new Account("poldo", new BCryptPasswordEncoder().encode("poldone")));
 
 
 			log.info("---------------SECURITY TEST DATA----------------");
@@ -55,42 +56,3 @@ public class SpringbootSandboxApplication  {
 	}
 }
 
-
-@EnableWebSecurity
-@Configuration
-class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().anyRequest().fullyAuthenticated().and().
-				httpBasic().and().
-				csrf();
-	}
-
-	@Autowired
-	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(userDetailsService());
-	}
-
-	@Autowired
-	AccountRepository accountRepository;
-
-
-
-	//Turned into lambda following the sample ! :)
-	@Bean
-	public UserDetailsService userDetailsService() {
-		return (username) -> {
-			Account account = accountRepository.findByUsername(username);
-
-			if(account != null) {
-				return new User(account.getUsername(), account.getPassword(), true, true, true, true,
-						AuthorityUtils.createAuthorityList("USER"));
-			} else {
-				throw new UsernameNotFoundException("could not find the user '"
-						+ username + "'");
-			}
-		};
-	}
-
-}
