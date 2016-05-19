@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.util.Date;
 
 /**
  * Created by riccardo.causo on 04.05.2016.
@@ -17,6 +18,7 @@ public class Account {
 
     private String username;
     private String password;
+    private Date lastPasswordReset;
 
     protected Account() {}
 
@@ -43,6 +45,8 @@ public class Account {
     public void setPassword(String password) {
         this.password = password;
     }
+    public Date getLastPasswordReset(){ return lastPasswordReset; };
+    public void setLastPasswordReset(Date lastPasswordReset){ this.lastPasswordReset = lastPasswordReset; };
 
     /*
     *
