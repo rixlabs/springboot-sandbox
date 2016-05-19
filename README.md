@@ -47,7 +47,8 @@ Handles and behaviour
 
 ### Endpoints ###
 
-/greeting
+/greeting   -> You need to be logged in to be greet
+/auth/token -> JWT token, you should be logged in to see this
 
 POST Some data to the H2 db
 ```
