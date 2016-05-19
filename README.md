@@ -47,8 +47,9 @@ Handles and behaviour
 
 ### Endpoints ###
 
-/greeting   -> You need to be logged in to be greet
-/auth/token -> JWT token, you should be logged in to see this
+**/greeting**   -> You need to be logged in to be greet
+
+**/auth/token** -> JWT token, you should be logged in to see this. Check the token [here](https://jwt.io/#debugger-io)
 
 POST Some data to the H2 db
 ```
