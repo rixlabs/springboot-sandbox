@@ -74,4 +74,17 @@ public class AuthenticationController {
     }
   }
 
+  @RequestMapping("/token")
+  public String token(){
+    String token;
+    Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    if (principal instanceof UserDetails) {
+      token = this.tokenUtils.generateToken((UserDetails)principal);
+    } else {
+      token = "ciao";
+    }
+
+    return token;
+  }
+
 }
