@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 /**
@@ -42,24 +43,24 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService()) //set the UserDetail service
+    public void configureGlobal(AuthenticationManagerBuilder auth,AccountRepository accountRepository) throws Exception {
+        auth.userDetailsService(userDetailsService(accountRepository)) //set the UserDetail service
             .passwordEncoder(passwordEncoder()); //set the encoder
     }
 
 
     //Define the encoder for passwords
     @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    @Autowired
-    AccountRepository accountRepository;
+    //@Autowired
+    //AccountRepository accountRepository;
 
     //Turned into lambda following the sample ! :)
     @Bean
-    public UserDetailsService userDetailsService() {
+    public UserDetailsService userDetailsService(AccountRepository accountRepository) {
         return (username) -> {
             Account account = accountRepository.findByUsername(username);
 
