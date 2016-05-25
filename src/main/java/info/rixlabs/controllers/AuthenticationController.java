@@ -1,13 +1,13 @@
 package info.rixlabs.controllers;
 
 
+import info.rixlabs.data.AccountRepository;
 import info.rixlabs.models.Account;
 import info.rixlabs.models.request.AuthenticationRequest;
 import info.rixlabs.models.request.AuthenticationResponse;
 import info.rixlabs.security.TokenUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -27,22 +27,33 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("auth")
 public class AuthenticationController {
 
+  private final AccountRepository accountRepository;
+  private final AuthenticationManager authenticationManager;
+  private final TokenUtils tokenUtils;
+  private final UserDetailsService userDetailsService;
+
+  @Autowired
+  AuthenticationController(AccountRepository accountRepository,
+                           AuthenticationManager authenticationManager,
+                           TokenUtils tokenUtils,
+                           UserDetailsService userDetailsService){
+                           this.accountRepository = accountRepository;
+                           this.authenticationManager = authenticationManager;
+                           this.tokenUtils = tokenUtils;
+                           this.userDetailsService = userDetailsService;
+  }
+
   private final Logger logger = Logger.getLogger(this.getClass());
 
   //@Value("${cerberus.token.header}")
   private String tokenHeader;
 
-  @Autowired
-  private AuthenticationManager authenticationManager;
 
-  @Autowired
-  private TokenUtils tokenUtils;
 
-  @Autowired
-  private UserDetailsService userDetailsService;
+
 
   @RequestMapping(method = RequestMethod.POST)
-  public ResponseEntity<?> authenticationRequest(@RequestBody AuthenticationRequest authenticationRequest) throws AuthenticationException {
+  public ResponseEntity<?> authenticationRequest(@RequestBody AuthenticationRequest authenticationRequest,UserDetailsService userDetailsService) throws AuthenticationException {
 
     // Perform the authentication
     Authentication authentication = this.authenticationManager.authenticate(
@@ -54,7 +65,7 @@ public class AuthenticationController {
     SecurityContextHolder.getContext().setAuthentication(authentication);
 
     // Reload password post-authentication so we can generate token
-    UserDetails userDetails = this.userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
+    UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
     String token = this.tokenUtils.generateToken(userDetails);
 
     // Return the token
@@ -62,10 +73,10 @@ public class AuthenticationController {
   }
 
   @RequestMapping( method = RequestMethod.GET)
-  public ResponseEntity<?> authenticationRequest(HttpServletRequest request) {
+  public ResponseEntity<?> authenticationRequest(HttpServletRequest request,UserDetailsService userDetailsService) {
     String token = request.getHeader(this.tokenHeader);
     String username = this.tokenUtils.getUsernameFromToken(token);
-    Account user = (Account) this.userDetailsService.loadUserByUsername(username);
+    Account user = (Account) userDetailsService.loadUserByUsername(username);
     if (this.tokenUtils.canTokenBeRefreshed(token, user.getLastPasswordReset())) {
       String refreshedToken = this.tokenUtils.refreshToken(token);
       return ResponseEntity.ok(new AuthenticationResponse(refreshedToken));
@@ -75,9 +86,13 @@ public class AuthenticationController {
   }
 
   @RequestMapping("/token")
-  public String token(){
+  public String token(AccountRepository accountRepository){
     String token;
     Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+    Account user = this.accountRepository.findByUsername("poldo");
+    UserDetails aaa =  userDetailsService.loadUserByUsername("poldo");
+
     if (principal instanceof UserDetails) {
       token = this.tokenUtils.generateToken((UserDetails)principal);
     } else {

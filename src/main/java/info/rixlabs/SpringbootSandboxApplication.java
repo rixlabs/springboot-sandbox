@@ -1,31 +1,21 @@
 package info.rixlabs;
 
 import info.rixlabs.data.AccountRepository;
+import info.rixlabs.data.PersonRepository;
 import info.rixlabs.models.Account;
-import org.springframework.beans.factory.annotation.Autowired;
+import info.rixlabs.models.Person;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.authentication.configurers.GlobalAuthenticationConfigurerAdapter;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
+import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 
 @SpringBootApplication
@@ -39,12 +29,13 @@ public class SpringbootSandboxApplication  {
 		SpringApplication.run(SpringbootSandboxApplication.class, args);
 	}
 
+
 	// Implement functional interface CommandLineRunner with a lambda
 	@Bean
-	public CommandLineRunner load(AccountRepository repository) {
+	public CommandLineRunner load(AccountRepository repository, PasswordEncoder passwordEncoder, PersonRepository peopleRepository) {
 		return (args) -> {
 			// save an account
-			repository.save(new Account("poldo", new BCryptPasswordEncoder().encode("poldone")));
+			repository.save(new Account("poldo", passwordEncoder.encode("poldone") ));
 
 
 			log.info("---------------SECURITY TEST DATA----------------");
@@ -52,6 +43,20 @@ public class SpringbootSandboxApplication  {
 				log.info(account.toString());
 			}
 			log.info("---------------SECURITY TEST DATA----------------");
+
+			log.info("---------------POPLE TEST DATA----------------");
+
+
+			//Stream.of(["Gino","Pldoni"],["Johnny","Sperso"]).forEach();
+			Arrays.asList(new Person("Gino","Pldoni"),new Person("Johnny","Sperso"),new Person("Stack","Asino")).stream().forEach(peopleRepository::save);
+//					person -> peopleRepository.save(person)
+//			);
+
+			peopleRepository.findAll().forEach(System.out::println);
+
+
+
+
 		};
 	}
 }
