@@ -37,10 +37,10 @@ public class AuthenticationController {
                            AuthenticationManager authenticationManager,
                            TokenUtils tokenUtils,
                            UserDetailsService userDetailsService){
-    this.accountRepository = accountRepository;
-    this.authenticationManager = authenticationManager;
-    this.tokenUtils = tokenUtils;
-    this.userDetailsService = userDetailsService;
+                           this.accountRepository = accountRepository;
+                           this.authenticationManager = authenticationManager;
+                           this.tokenUtils = tokenUtils;
+                           this.userDetailsService = userDetailsService;
   }
 
   private final Logger logger = Logger.getLogger(this.getClass());

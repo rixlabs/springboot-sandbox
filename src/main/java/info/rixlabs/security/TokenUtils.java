@@ -1,8 +1,10 @@
 package info.rixlabs.security;
 
 
-import info.rixlabs.models.Account;
-import io.jsonwebtoken.*;
+import info.rixlabs.models.CustomUser;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,7 +27,7 @@ public class TokenUtils {
   @Value("sssshhhh!")
   private String secret;
 
-  @Value("604800")
+  @Value("600")//one week 604800
   private Long expiration;
 
   public String getUsernameFromToken(String token) {
@@ -142,11 +144,12 @@ public class TokenUtils {
   }
 
   public Boolean validateToken(String token, UserDetails userDetails) {
-    Account user = (Account) userDetails;
+    CustomUser user = (CustomUser) userDetails;
     final String username = this.getUsernameFromToken(token);
     final Date created = this.getCreatedDateFromToken(token);
     final Date expiration = this.getExpirationDateFromToken(token);
-    return (username.equals(user.getUsername()) && !(this.isTokenExpired(token)) && !(this.isCreatedBeforeLastPasswordReset(created, user.getLastPasswordReset())));
+    //return (username.equals(user.getUsername()) && !(this.isTokenExpired(token)) && !(this.isCreatedBeforeLastPasswordReset(created, user.getLastPasswordReset())));
+    return (username.equals(user.getUsername()) && !(this.isTokenExpired(token)) );
   }
 
 }
