@@ -36,6 +36,7 @@ public class SpringbootSandboxApplication  {
 		return (args) -> {
 			// save an account
 			repository.save(new Account("poldo", passwordEncoder.encode("poldone") ));
+			repository.save(new Account("gino", passwordEncoder.encode("poldoni") ));
 
 
 			log.info("---------------SECURITY TEST DATA----------------");

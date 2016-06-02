@@ -4,6 +4,7 @@ import info.rixlabs.data.AccountRepository;
 import info.rixlabs.models.Account;
 import info.rixlabs.models.CustomUser;
 import info.rixlabs.security.AuthenticationTokenFilter;
+import info.rixlabs.security.CustomUserdetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,6 +13,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -27,6 +29,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+
+    @Autowired
+    private UserDetailsService userDetailsService;
 
     @Bean
     public AuthenticationTokenFilter authenticationTokenFilterBean() throws Exception {
@@ -46,6 +51,9 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .httpBasic()
                 .and()
                 .csrf().disable()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
                 .logout()
                     .logoutUrl("/logout")
                     .invalidateHttpSession(true);
@@ -56,24 +64,26 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth,AccountRepository accountRepository) throws Exception {
-        auth.userDetailsService(userDetailsService(accountRepository)) //set the UserDetail service
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService) //set the UserDetail service
             .passwordEncoder(passwordEncoder()); //set the encoder
     }
 
-
+    //@Bean
+    //public UserDetailsService userDetailsService() { return new CustomUserdetailService();}
     //Define the encoder for passwords
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-    //@Autowired
-    //AccountRepository accountRepository;
+/*
+    @Autowired
+    AccountRepository accountRepository;
 
     //Turned into lambda following the sample ! :)
+
     @Bean
-    public UserDetailsService userDetailsService(AccountRepository accountRepository) {
+    public UserDetailsService userDetailsService() {
         return (username) -> {
             Account account = accountRepository.findByUsername(username);
 
@@ -86,5 +96,6 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             }
         };
     }
+    */
 
 }

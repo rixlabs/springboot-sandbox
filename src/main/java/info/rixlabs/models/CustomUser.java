@@ -5,139 +5,129 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Date;
 
 public class CustomUser implements UserDetails {
+    private Long id;
+    private String username;
+    private String password;
 
-  //private Long id;
-  private String username;
-  private String password;
- // private String email;
-  //private Date lastPasswordReset;
-  private Collection<? extends GrantedAuthority> authorities;
-  private Boolean accountNonExpired = true;
-  private Boolean accountNonLocked = true;
-  private Boolean credentialsNonExpired = true;
-  private Boolean enabled = true;
+    private Date lastPasswordReset;
+    private Collection<? extends GrantedAuthority> authorities;
+    private Boolean accountNonExpired = true;
+    private Boolean accountNonLocked = true;
+    private Boolean credentialsNonExpired = true;
+    private Boolean enabled = true;
 
-  public CustomUser() {
-    super();
-  }
+    public CustomUser() {
+        super();
+    }
 
-  public CustomUser(String username, String password, Collection<? extends GrantedAuthority> authorities) {
-    //this.setId(id);
-    this.setUsername(username);
-    this.setPassword(password);
-    //this.setEmail(email);
-    //this.setLastPasswordReset(lastPasswordReset);
-    this.setAuthorities(authorities);
-  }
-  /*
-  public Long getId() {
-    return this.id;
-  }
+    public CustomUser(Long id, String username, String password, Date lastPasswordReset, Collection<? extends GrantedAuthority> authorities) {
+        this.setId(id);
+        this.setUsername(username);
+        this.setPassword(password);
+        this.setLastPasswordReset(lastPasswordReset);
+        this.setAuthorities(authorities);
+    }
 
-  public void setId(Long id) {
-    this.id = id;
-  }
-  */
-  public String getUsername() {
-    return this.username;
-  }
+    public Long getId() {
+        return this.id;
+    }
 
-  public void setUsername(String username) {
-    this.username = username;
-  }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-  @JsonIgnore
-  public String getPassword() {
-    return this.password;
-  }
+    public String getUsername() {
+        return this.username;
+    }
 
-  public void setPassword(String password) {
-    this.password = password;
-  }
-  /*
-  public String getEmail() {
-    return this.email;
-  }
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
-  public void setEmail(String email) {
-    this.email = email;
-  }
-  */
-  /*
-  @JsonIgnore
-  public Date getLastPasswordReset() {
-    return this.lastPasswordReset;
-  }
+    @JsonIgnore
+    public String getPassword() {
+        return this.password;
+    }
 
-  public void setLastPasswordReset(Date lastPasswordReset) {
-    this.lastPasswordReset = lastPasswordReset;
-  }
-  */
-  @Override
-  public Collection<? extends GrantedAuthority> getAuthorities() {
-    return this.authorities;
-  }
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-  public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {
-    this.authorities = authorities;
-  }
 
-  @JsonIgnore
-  public Boolean getAccountNonExpired() {
-    return this.accountNonExpired;
-  }
+    @JsonIgnore
+    public Date getLastPasswordReset() {
+        return this.lastPasswordReset;
+    }
 
-  public void setAccountNonExpired(Boolean accountNonExpired) {
-    this.accountNonExpired = accountNonExpired;
-  }
+    public void setLastPasswordReset(Date lastPasswordReset) {
+        this.lastPasswordReset = lastPasswordReset;
+    }
 
-  @Override
-  public boolean isAccountNonExpired() {
-    return this.getAccountNonExpired();
-  }
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return this.authorities;
+    }
 
-  @JsonIgnore
-  public Boolean getAccountNonLocked() {
-    return this.accountNonLocked;
-  }
+    public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {
+        this.authorities = authorities;
+    }
 
-  public void setAccountNonLocked(Boolean accountNonLocked) {
-    this.accountNonLocked = accountNonLocked;
-  }
+    @JsonIgnore
+    public Boolean getAccountNonExpired() {
+        return this.accountNonExpired;
+    }
 
-  @Override
-  public boolean isAccountNonLocked() {
-    return this.getAccountNonLocked();
-  }
+    public void setAccountNonExpired(Boolean accountNonExpired) {
+        this.accountNonExpired = accountNonExpired;
+    }
 
-  @JsonIgnore
-  public Boolean getCredentialsNonExpired() {
-    return this.credentialsNonExpired;
-  }
+    @Override
+    public boolean isAccountNonExpired() {
+        return this.getAccountNonExpired();
+    }
 
-  public void setCredentialsNonExpired(Boolean credentialsNonExpired) {
-    this.credentialsNonExpired = credentialsNonExpired;
-  }
+    @JsonIgnore
+    public Boolean getAccountNonLocked() {
+        return this.accountNonLocked;
+    }
 
-  @Override
-  public boolean isCredentialsNonExpired() {
-    return this.getCredentialsNonExpired();
-  }
+    public void setAccountNonLocked(Boolean accountNonLocked) {
+        this.accountNonLocked = accountNonLocked;
+    }
 
-  @JsonIgnore
-  public Boolean getEnabled() {
-    return this.enabled;
-  }
+    @Override
+    public boolean isAccountNonLocked() {
+        return this.getAccountNonLocked();
+    }
 
-  public void setEnabled(Boolean enabled) {
-    this.enabled = enabled;
-  }
+    @JsonIgnore
+    public Boolean getCredentialsNonExpired() {
+        return this.credentialsNonExpired;
+    }
 
-  @Override
-  public boolean isEnabled() {
-    return this.getEnabled();
-  }
+    public void setCredentialsNonExpired(Boolean credentialsNonExpired) {
+        this.credentialsNonExpired = credentialsNonExpired;
+    }
 
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return this.getCredentialsNonExpired();
+    }
+
+    @JsonIgnore
+    public Boolean getEnabled() {
+        return this.enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return this.getEnabled();
+    }
 }

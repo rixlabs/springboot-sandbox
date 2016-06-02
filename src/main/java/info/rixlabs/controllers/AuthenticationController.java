@@ -3,6 +3,7 @@ package info.rixlabs.controllers;
 
 import info.rixlabs.data.AccountRepository;
 import info.rixlabs.models.Account;
+import info.rixlabs.models.CustomUser;
 import info.rixlabs.models.request.AuthenticationRequest;
 import info.rixlabs.models.request.AuthenticationResponse;
 import info.rixlabs.security.TokenUtils;
@@ -30,19 +31,21 @@ public class AuthenticationController {
   private final AccountRepository accountRepository;
   private final AuthenticationManager authenticationManager;
   private final TokenUtils tokenUtils;
-  private final UserDetailsService userDetailsService;
+  //private final UserDetailsService userDetailsService;
 
   @Autowired
   AuthenticationController(AccountRepository accountRepository,
                            AuthenticationManager authenticationManager,
-                           TokenUtils tokenUtils,
-                           UserDetailsService userDetailsService){
+                           TokenUtils tokenUtils
+                           ){
                            this.accountRepository = accountRepository;
                            this.authenticationManager = authenticationManager;
                            this.tokenUtils = tokenUtils;
-                           this.userDetailsService = userDetailsService;
+                          // this.userDetailsService = userDetailsService;
   }
 
+  @Autowired
+  private UserDetailsService userDetailsService;
   private final Logger logger = Logger.getLogger(this.getClass());
 
   //@Value("${cerberus.token.header}")
@@ -53,7 +56,7 @@ public class AuthenticationController {
 
 
   @RequestMapping(method = RequestMethod.POST)
-  public ResponseEntity<?> authenticationRequest(@RequestBody AuthenticationRequest authenticationRequest,UserDetailsService userDetailsService) throws AuthenticationException {
+  public ResponseEntity<?> authenticationRequest(@RequestBody AuthenticationRequest authenticationRequest) throws AuthenticationException {
 
     // Perform the authentication
     Authentication authentication = this.authenticationManager.authenticate(
@@ -66,6 +69,7 @@ public class AuthenticationController {
 
     // Reload password post-authentication so we can generate token
     UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
+
     String token = this.tokenUtils.generateToken(userDetails);
 
     // Return the token
@@ -90,11 +94,12 @@ public class AuthenticationController {
     String token;
     Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
+    /*
     Account user = this.accountRepository.findByUsername("poldo");
     UserDetails aaa =  userDetailsService.loadUserByUsername("poldo");
-
+    */
     if (principal instanceof UserDetails) {
-      token = this.tokenUtils.generateToken((UserDetails)principal);
+      token = this.tokenUtils.generateToken((UserDetails) principal);
     } else {
       token = "ciao";
     }
