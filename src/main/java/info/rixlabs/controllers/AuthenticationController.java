@@ -31,21 +31,22 @@ public class AuthenticationController {
   private final AccountRepository accountRepository;
   private final AuthenticationManager authenticationManager;
   private final TokenUtils tokenUtils;
-  //private final UserDetailsService userDetailsService;
+  private final UserDetailsService userDetailsService;
 
   @Autowired
   AuthenticationController(AccountRepository accountRepository,
                            AuthenticationManager authenticationManager,
-                           TokenUtils tokenUtils
+                           TokenUtils tokenUtils,
+                           UserDetailsService userDetailsService
                            ){
                            this.accountRepository = accountRepository;
                            this.authenticationManager = authenticationManager;
                            this.tokenUtils = tokenUtils;
-                          // this.userDetailsService = userDetailsService;
+                           this.userDetailsService = userDetailsService;
   }
 
-  @Autowired
-  private UserDetailsService userDetailsService;
+  //@Autowired
+  //private UserDetailsService userDetailsService;
   private final Logger logger = Logger.getLogger(this.getClass());
 
   //@Value("${cerberus.token.header}")
