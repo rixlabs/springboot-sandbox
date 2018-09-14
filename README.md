@@ -1,5 +1,7 @@
 # springboot-sandbox #
 
+Need to rewrite everything
+
 a little sandbox for an easy start playing with spring boot features
 
 ## Build and startup ##
