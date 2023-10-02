@@ -1,0 +1,25 @@
+<mxfile host="app.diagrams.net" modified="2023-10-02T03:04:58.189Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36" etag="GXUNnE0kJ-RoVP-cui1g" version="22.0.0" type="github">
+  <diagram name="Page-1" id="jiIgokvJupt0rKBaA4VE">
+    <mxGraphModel dx="954" dy="595" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="6IOFh6LSLnhNLB-BzlUr-1" value="Publisher" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="200" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="6IOFh6LSLnhNLB-BzlUr-2" value="Message Broker" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;rotation=90;textDirection=ltr;labelBorderColor=default;align=center;" vertex="1" parent="1">
+          <mxGeometry x="300" y="165" width="60" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="6IOFh6LSLnhNLB-BzlUr-3" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="480" y="200" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="6IOFh6LSLnhNLB-BzlUr-4" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="480" y="80" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="6IOFh6LSLnhNLB-BzlUr-5" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="480" y="320" width="120" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
